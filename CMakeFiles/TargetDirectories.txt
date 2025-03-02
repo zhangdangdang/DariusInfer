@@ -1,4 +1,0 @@
-/home/work/interfer/DariusInfer/CMakeFiles/darius.dir
-/home/work/interfer/DariusInfer/CMakeFiles/test.dir
-/home/work/interfer/DariusInfer/CMakeFiles/edit_cache.dir
-/home/work/interfer/DariusInfer/CMakeFiles/rebuild_cache.dir

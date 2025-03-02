@@ -1,1 +1,5 @@
 log/
+build/
+cmake-build-debug/
+.vscode/
+CMakeFiles/

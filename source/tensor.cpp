@@ -203,13 +203,61 @@ namespace darius_infer
     {
         CHECK(!this->data_.empty());
         CHECK_EQ(pads.size(), 4);
+
+        // 请补充代码    #include <vector>
+
+        if (this->data_.empty())
+        {
+            throw std::invalid_argument("Tensor data is empty.");
+        }
+
+        // 检查 pads 的大小是否为 4
+        if (pads.size() != 4)
+        {
+            throw std::invalid_argument("Pads vector must contain exactly 4 elements.");
+        }
+
         // 四周填充的维度
         uint32_t pad_rows1 = pads.at(0); // up
         uint32_t pad_rows2 = pads.at(1); // bottom
         uint32_t pad_cols1 = pads.at(2); // left
-        uint32_t pad_cols2 = pads.at(3); // right
+        uint32_t pad_cols2 = pads.at(3); // right;
 
-        // 请补充代码
+        // 获取原始张量的尺寸
+        uint32_t original_rows = this->rows();
+        uint32_t original_cols = this->cols();
+        uint32_t channels = this->channels();
+
+        // 计算新的尺寸
+        uint32_t new_rows = original_rows + pad_rows1 + pad_rows2;
+        uint32_t new_cols = original_cols + pad_cols1 + pad_cols2;
+
+        // 创建一个新的数据容器
+        // std::vector<float> new_data(new_rows * new_cols, padding_value);
+        // 创建一个新的填充后的张量
+        arma::fcube new_data(new_rows, new_cols, channels, arma::fill::value(padding_value));
+        // 将原始数据复制到新张量的中心位置
+        for (uint32_t c = 0; c < channels; ++c)
+        {
+            for (uint32_t i = 0; i < original_rows; ++i)
+            {
+                for (uint32_t j = 0; j < original_cols; ++j)
+                {
+                    new_data.at(i + pad_rows1, j + pad_cols1, c) = this->data_.at(i, j, c);
+                }
+            }
+        }
+
+        // 更新 data_ 和 raw_shapes_
+        this->data_ = new_data;
+        this->raw_shapes_ = {channels, new_rows, new_cols};
+        // for (uint32_t i = 0; i < new_data.n_slices; ++i)
+        // {
+        //     LOG(INFO) << "1111111111111111Channel: " << i;
+        //     LOG(INFO) << "\n"
+        //               << new_data.slice(i);
+        // }
+
     }
 
     void Tensor<float>::Fill(float value)
@@ -237,6 +285,8 @@ namespace darius_infer
                 auto &channel_data = this->data_.slice(i);
                 const arma::fmat &channel_data_t =
                     arma::fmat(values.data() + i * planes, this->cols(), this->rows());
+                // arma::fmat(values.data() + i * planes, this->rows(), this->cols());
+                // channel_data = channel_data_t; //.t();
                 channel_data = channel_data_t.t();
             }
         }
@@ -273,15 +323,15 @@ namespace darius_infer
             flattened_data = this->values(false);
         }
         this->raw_shapes_ = {total_size};
-        this->Show();
-        const float *cube_data = data_.memptr();
-        for (int i = 0; i < total_size; i++)
-        {
-            printf("%0.0f ", cube_data[i]);
-        }
-        printf("\n end \n");
+        // this->Show();
+        // const float *cube_data = data_.memptr();
+        // for (int i = 0; i < total_size; i++)
+        // {
+        //     printf("%0.0f ", cube_data[i]);
+        // }
+        // printf("\n end \n");
         this->data_.reshape(1, total_size, 1);
-        this->Show();
+        // this->Show();
         if (row_major)
         {
             this->Fill(flattened_data, true);

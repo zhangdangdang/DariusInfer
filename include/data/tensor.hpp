@@ -241,7 +241,7 @@ namespace darius_infer {
         float *matrix_raw_ptr(uint32_t index);
 
         private:
-        std::vector<uint32_t> raw_shapes_;  // 张量数据的实际尺寸大小
+        std::vector<uint32_t> raw_shapes_;  // 张量数据的实际尺寸大小{channels, rows, cols}
         arma::fcube data_;                  // 张量数据
     };
 

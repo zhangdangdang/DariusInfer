@@ -14,7 +14,17 @@ int main(int argc, char *argv[]) {
 
   LOG(INFO) << "Start test...\n";
   return RUN_ALL_TESTS();
-
+  // using namespace darius_infer;
+  // Tensor<float> f1(2, 3, 4);
+  // std::vector<float> values(2 * 3 * 4);
+  // // 将1到12填充到values中
+  // for (int i = 0; i < 24; ++i) {
+  //     values.at(i) = float(i + 1);
+  // }
+  // f1.Fill(values);
+  // LOG(INFO) << "-------------------fill-------------------";
+  // f1.Show();
+  // LOG(INFO) << "-------------------after fill-------------------";
 //    std::vector<float> values(2 * 3 * 2);
 //    // 将1到12填充到values中
 //    for (int i = 0; i < 12; ++i) {

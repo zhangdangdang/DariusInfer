@@ -9,7 +9,9 @@ TEST(test_transform, transform1) {
     using namespace darius_infer;
     Tensor<float> f1(2, 3, 4);
     f1.Rand();
+    LOG(INFO) << "-------------------before transform-------------------";
     f1.Show();
     f1.Transform(MinusOne);
+    LOG(INFO) << "-------------------after transform-------------------";
     f1.Show();
 }

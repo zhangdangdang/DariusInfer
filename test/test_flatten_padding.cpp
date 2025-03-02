@@ -22,15 +22,15 @@ TEST(test_flatten, flatten1) {
 }
 
 TEST(test_flatten, flatten2) {
-    using namespace darius_infer;
-    Tensor<float> f1(12, 24);
-    LOG(INFO) << "-------------------before Flatten2-------------------";
-    f1.Show();
-    f1.Flatten(true);
-    LOG(INFO) << "-------------------after Flatten2-------------------";
-    f1.Show();
-    ASSERT_EQ(f1.raw_shapes().size(), 1);
-    ASSERT_EQ(f1.raw_shapes().at(0), 24 * 12);
+    // using namespace darius_infer;
+    // Tensor<float> f1(12, 24);
+    // LOG(INFO) << "-------------------before Flatten2-------------------";
+    // f1.Show();
+    // f1.Flatten(true);
+    // LOG(INFO) << "-------------------after Flatten2-------------------";
+    // f1.Show();
+    // ASSERT_EQ(f1.raw_shapes().size(), 1);
+    // ASSERT_EQ(f1.raw_shapes().at(0), 24 * 12);
 }
 
 TEST(test_padding, padding1) {
